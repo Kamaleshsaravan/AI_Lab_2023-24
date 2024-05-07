@@ -1,6 +1,6 @@
 # Ex.No: 11  Planning –  Block World Problem 
-### DATE: 01/04/2024                                                                           
-### REGISTER NUMBER : 212221060110
+### DATE: 01.04.2024                                                                           
+### REGISTER NUMBER : 212221040110
 ### AIM: 
 To find the sequence of plan for Block word problem using PDDL  
 ###  Algorithm:
@@ -14,35 +14,38 @@ Step 7 : In un-stack action, Robot arm pick the block on some block. Preconditio
 Step 8 : In stack action, Robot arm place the block on under block. Precondition is Block holded by robot arm and no other block on under block.<br>
 Step 9 : Define a problem for block world problem.<br> 
 Step 10 : Obtain the plan for given problem.<br> 
+     
 ### Program:
 ```
 (define (domain blocksworld)
 (:requirements :strips :equality)
 (:predicates (clear ?x)
-             (on-table ?x)
-             (arm-empty)
-             (holding ?x)
-             (on ?x ?y))
+ (on-table ?x)
+ (arm-empty)
+ (holding ?x)
+ (on ?x ?y))
 (:action pickup
-  :parameters (?ob)
-  :precondition (and (clear ?ob) (on-table ?ob) (arm-empty))
-  :effect (and (holding ?ob) (not (clear ?ob)) (not (on-table ?ob)) 
-               (not (arm-empty))))
+ :parameters (?ob)
+ :precondition (and (clear ?ob) (on-table ?ob) (arm-empty))
+```
+```
+ :effect (and (holding ?ob) (not (clear ?ob)) (not (on-table ?ob))
+ (not (arm-empty))))
 (:action putdown
-  :parameters  (?ob)
-  :precondition (and (holding ?ob))
-  :effect (and (clear ?ob) (arm-empty) (on-table ?ob) 
-               (not (holding ?ob))))
+ :parameters (?ob)
+ :precondition (and (holding ?ob))
+ :effect (and (clear ?ob) (arm-empty) (on-table ?ob)
+ (not (holding ?ob))))
 (:action stack
-  :parameters  (?ob ?underob)
-  :precondition (and  (clear ?underob) (holding ?ob))
-  :effect (and (arm-empty) (clear ?ob) (on ?ob ?underob)
-               (not (clear ?underob)) (not (holding ?ob))))
+ :parameters (?ob ?underob)
+ :precondition (and (clear ?underob) (holding ?ob))
+ :effect (and (arm-empty) (clear ?ob) (on ?ob ?underob)
+ (not (clear ?underob)) (not (holding ?ob))))
 (:action unstack
-  :parameters  (?ob ?underob)
-  :precondition (and (on ?ob ?underob) (clear ?ob) (arm-empty))
-  :effect (and (holding ?ob) (clear ?underob)
-               (not (on ?ob ?underob)) (not (clear ?ob)) (not (arm-empty)))))
+ :parameters (?ob ?underob) 
+ :precondition (and (on ?ob ?underob) (clear ?ob) (arm-empty))
+ :effect (and (holding ?ob) (clear ?underob)
+ (not (on ?ob ?underob)) (not (clear ?ob)) (not (arm-empty)))))
 ```
 
 
@@ -53,31 +56,17 @@ Step 10 : Obtain the plan for given problem.<br>
 
 
 ### Input 
-problem 1
 ```
 (define (problem pb1)
-   (:domain blocksworld)
-   (:objects a b)
-   (:init (on-table a) (on-table b)  (clear a)  (clear b) (arm-empty))
-   (:goal (and (on a b))))
+ (:domain blocksworld)
+ (:objects a b)
+ (:init (on-table a) (on-table b) (clear a) (clear b) (arm-empty))
+ (:goal (and (on a b))))
 ```
 
 ### Output/Plan:
-![image](https://github.com/Kamaleshsaravan/AI_Lab_2023-24/assets/160414936/2da09bb4-6f78-4feb-a935-216eb9ac2fab)
+![image](https://github.com/Maheswarikarthi/AI_Lab_2023-24/assets/127172770/9f20370c-d007-4c70-906b-602e78a20aac)
 
-### Input
-Problem 2: Problem2.pddl
-```
-(define(problem pb3)
-	   (:domain blocksworld)
-	   (:objects a b c)
-	   (:init (on-table a) (on-table b)   (on-table c)  
-	          (clear a)  (clear b) (clear c) (arm-empty))
-	   (:goal (and (on a b) (on b c))))
-```
-
-### Output/Plan:
-![image](https://github.com/Kamaleshsaravan/AI_Lab_2023-24/assets/160414936/f4ee0c77-d6bc-4355-a5e3-94e67c2aee5c)
 
 
 
